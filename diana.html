@@ -1,151 +1,288 @@
 <!DOCTYPE html>
-<html lang="">
-
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- 浏览器标签上显示的网站标题 -->
-    <title>全部正确的网页～</title>
-<!--网站标题自动判断-->
-<script>
-	var title = document.title;
-        function istitle() {
-	     var isHidden = document.hidden;	
-	      if (isHidden) {
-		//当窗口不可见
-		document.title = '(つ ェ ⊂)我藏好了哦~|全部正确のBlog';
-	      } else {
-		//当窗口可见
-		document.title = '(*゜ロ゜)ノ被发现了~|全部正确のBlog';
-		setTimeout("document.title=title", 3000);
-	      }
-	    };
-	document.addEventListener('visibilitychange', istitle);
-</script>
-    <!-- 网站介绍 -->
-    <meta name="description" content="全部正确的网站">
-    <!-- 网站关键字 -->
-    <meta name="keywords" content="还在说话,个人主页,程序员">
-    <!-- 浏览器标签上显示的图标 -->
-    <link rel="icon" type="image/ico" href="//s1.imagehub.cc/images/2023/01/25/323550736dd5bd9c9dd218f3d64944c4.th.jpeg">
-    <!-- 样式文件 -->
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css">
-    <link rel="stylesheet" href="./static/style.css?v=1.2.0">
-    <link rel="stylesheet" href="./static/APlayer-1.10.1/dist/APlayer.min.css">
-
-    <!-- 自定义设置 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>68块钱的博客 | 左搞右搞</title>
     <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --text: #34495e;
+            --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
         body {
-            /*背景图片URL 可使用随机图片API */
-            background-image: url("https://s1.imagehub.cc/images/2023/01/25/954aa0fd51e9936e9c1271b069399f1e.png");
+            font-family: 'Segoe UI', system-ui;
+            line-height: 1.6;
+            color: var(--text);
+            background: #f8f9fa url('https://img.picui.cn/free/2025/04/27/680e49c4e4fc9.png') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+            min-height: 100vh;
         }
 
-        .photo-bg {
-            /* 卡片左侧图片 */
-            background-image: url("https://s1.imagehub.cc/images/2023/01/25/87884152a07c153a1cdb765e346ea1a3.jpeg");
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0);
+            z-index: -1;
         }
-        
+
+        /* 修改后的透明导航栏 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0); /* 完全透明 */
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        /* 毛玻璃文章卡片 */
+        .article-card {
+            background: rgba(255, 255, 255, 0); /* 0%透明度 */
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 800px;
+            border: 1px solid rgba(255, 255, 255, 0.3); /* 添加半透明边框 */
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.8); /* 悬停时稍加强调 */
+        }
+
+        /* 文章详情页同样样式 */
+        .article-detail {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 3rem;
+            margin: 2rem auto;
+            max-width: 800px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* 其他保持原有样式 */
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color var(--transition);
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary);
+        }
+
+        .main-content {
+            margin-top: 80px;
+            padding: 2rem;
+            min-height: calc(100vh - 160px);
+            opacity: 1;
+            transform: translateY(0);
+            transition: all var(--transition);
+        }
+
+        .article-image {
+            width: 100%;
+            height: 400px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin: 1.5rem 0;
+        }
+
+        /* 动画类 */
+        .fade-in {
+            animation: fadeIn var(--transition);
+        }
+
+        .slide-left {
+            animation: slideLeft 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideLeft {
+            from { transform: translateX(100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 1rem;
+                flex-direction: column;
+            }
+
+            .nav-links {
+                margin-top: 1rem;
+                gap: 1.5rem;
+            }
+
+            .article-card, .article-detail {
+                padding: 1.5rem;
+                margin: 1rem auto;
+                backdrop-filter: blur(5px); /* 移动端减小模糊程度 */
+            }
+
+            .article-image {
+                height: 250px;
+            }
+        }
     </style>
-    <script>
-        // 音乐设置
-        let meting_music_api = "https://api.mizore.cn/meting/api.php";// meting api
-        let music_server = "netease"; // 音乐服务：网易云 netease 参见 meting api支持的服务
-        let music_type = "playlist"; // 歌曲类型：歌单playlist 单首歌曲 song  专辑 album
-        let music_id = "8090080240"; // 歌单ID或歌曲ID或者专辑ID 20173709 29732992
-        let music_order = "list"; // 音频循环顺序, 顺序播放： 'list', 随机播放：'random'
-        let music_mini = false; // mini模式 吸底模式开启后此选项实效 true / false
-        let music_fixed = false; // 吸底模式
-        let music_volume = 0.7; // 默认音量
-        let music_autoplay = false; // 自动播放
-        let music_loop = "all"; // 音频循环播放, 可选值: 'all', 'one', 'none' ，分别为全部循环，单曲循环，不循环
-        // TODO 一言设置
-    </script>
-    <!-- end 自定义设置 -->
 </head>
-
 <body>
-  </div>
-    <div id="main" class="container">
-        <div class="row my-card justify-content-center">
-            <div class="col-lg-4 photo-bg"></div>
-            <div class="col-lg-8 card"> 
-                <!-- 大标题 -->
-                <h1>全部正确的网站</h1>
-                <!-- 标题下的一段话 -->
-                <p>
-                   网站暂停开发，上一次维护时间2023年3月10日，还在说话啊！
-                </p>
-                <p id="hitokoto_text">:D 一言获取中...</p>
-                <div class="container-fluid">
-                    <div class="row">
-                        <!-- 导航按钮组 -->
-                        <button data-href="https://space.bilibili.com/559704698" data-title="哔哩哔哩" data-window="newtab" data-anim="4"
-                            data-area-w="80%" data-area-h="90%" data-shade="false"
-                            class="kz-nav-btn btn btn-primary col-lg-4">哔哩哔哩</button>
-
-                        <button data-href="https://postimg.cc/gallery/3wHfXtc" data-title="相册" data-window="newtab"
-                            data-anim="4" data-area-w="80%" data-area-h="90%" data-shade="false"
-                            class="kz-nav-btn btn btn-secondary col-lg-4">相册</button>
-
-                        <button data-href="https://qm.qq.com/cgi-bin/qm/qr?k=Kunkg07YM05tbzolY1_14CnJsBtTxJeZ&noverify=0&personal_qrcode_source=3"
-                            data-title="Blog" data-window="newtab" data-anim="4" data-area-w="80%" data-area-h="90%"
-                            data-shade="false" class="kz-nav-btn btn btn-success col-lg-4">QQ</button>
-
-                        <button data-href="https://v8690.github.io"
-                            data-title="Blog" data-window="newtab" data-anim="4" data-area-w="80%" data-area-h="90%"
-                            data-shade="false" class="kz-nav-btn btn btn-success col-lg-4">备用站</button>
-
-	                        <button data-href="https://www.askbox.ink/box/uu/EJXPFLD8?uid=88a9c45871cd865029df59827a53eea0" data-title="举报箱（留言箱）" data-window="newtab"
-                            data-anim="4" data-area-w="80%" data-area-h="90%" data-shade="false"
-                            class="kz-nav-btn btn btn-secondary col-lg-4">举报箱（留言箱）</button>		    
-			    <!-- end 导航按钮组 -->
-                    </div>
-                </div>
-                <!-- aplayer inner -->
-                <div id="aplayer-inner" class="aplayer"></div>
-                <!-- end aplayer inner -->
-                <ul class="social mt-1">
-                    <li><a href="#"><i class="fab fa-weibo " aria-hidden="true"></i></a>
-                    </li>
-                    <li><a href="https://github.com/V8690"><i class="fab fa-github" aria-hidden="true"></i></a></li>
-                    <li><a href="#"><i class="fab fa-telegram" aria-hidden="true"></i></a></li>
-                    <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
-                    <li><a href="#"><i class="fab fa-zhihu"
-                                aria-hidden="true"></i></a></li>
-                </ul>
-   
-                <footer>
-                    <p>Copyright 2023 - Now <a href="http://beian.miit.gov.cn/" target="_blank">赣ICP备88888888号-1</a>
-                                 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-            <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
-
-                    </p>
-                </footer>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1>左搞右搞</h1>
+            <div class="nav-links">
+                <a class="nav-link" onclick="loadHome()">首页</a>
+                <a class="nav-link" onclick="loadAbout()">关于</a>
             </div>
         </div>
+    </nav>
 
-    </div>
+    <main id="content" class="main-content"></main>
 
-    <!-- aplayer -->
-    <div id="aplayer-fixed" class="aplayer"></div>
-    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
-    <script src="./static/APlayer-1.10.1/dist/APlayer.min.js"></script>
-    <script src="./static/Meting.min.js"></script>
-    <!-- end_aplayer -->
-    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
-    <script defer src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <script src="./static/layer-v3.5.1/layer/layer.js"></script>
+    <!-- 保持原有JavaScript不变 -->
+    <script>
+        const articles = [
+            {
+                id: 1,
+                title: "初探68块钱之美",
+                date: "2025-04-27",
+                image: "https://img.picui.cn/free/2025/04/28/680e54e949692.png",
+                content: `<p>在永新县致远学校中，有一个老师名叫老李，他经常拿着他68块钱买的翻页笔左搞右搞</p>
+                          <h2>核心原理</h2>
+                          <p>使用翻页笔代替状元鞭，结合揪懒根加速考上985...</p>`
+            },
+            {
+                id: 2,
+                title: "揪懒根实践指南",
+                date: "2024-04-27",
+                image: "https://img.picui.cn/free/2025/04/27/680e4b15360e0.jpg",
+                content: `<p>从揪懒根优先到自适应，我们将深入探讨揪懒根的核心技巧。包含：</p>
+                          <ul>
+                            <li>揪懒根的最佳实践</li>
+                            <li>揪懒根的进阶用法</li>
+                            <li>揪懒根解决方案</li>
+                          </ul>`
+            },
+            {
+                id: 3,
+                title: "再探权威之力",
+                date: "2025-04-27",
+                image: "https://img.picui.cn/free/2025/04/28/680e54e3e4013.jpg",
+                content: `<p>略</p>
+                          <h2>核心原理</h2>
+                          <p>请开通VIP查看</p>`
+            }
+        ];
 
-    <script src="./static/main.js"></script>
-    <!-- L2Dwidget.js L2D网页动画人物 -->
-  <script src="https://eqcn.ajz.miesnfu.com/wp-content/plugins/wp-3d-pony/live2dw/lib/L2Dwidget.min.js"></script>
-  <script>
-    L2Dwidget.init({
-      "model": { "jsonPath":"https://unpkg.com/live2d-widget-model-shizuku@1.0.5/assets/shizuku.model.json", "scale": 1, "hHeadPos":0.5, "vHeadPos":0.618 },
-      "display": { "position": "right", "width": 150, "height": 150, "hOffset": 0, "vOffset": 0 },
-      "mobile": { "show": true, "scale": 0.5 },
-      "react": { "opacityDefault": 0.7, "opacityOnHover": 0.2 }
-    });
-  </script>
+        document.addEventListener('DOMContentLoaded', loadHome);
+
+        function loadHome() {
+            const content = document.getElementById('content');
+            content.innerHTML = articles.map(article => `
+                <div class="article-card fade-in" onclick="loadArticle(${article.id})">
+                    <h2>${article.title}</h2>
+                    <small>${article.date}</small>
+                    <img src="${article.image}" alt="配图" class="article-image">
+                </div>
+            `).join('');
+            addAnimations();
+        }
+
+        function loadArticle(id) {
+            const article = articles.find(a => a.id === id);
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <div class="article-detail slide-left">
+                    <button onclick="loadHome()" style="margin-bottom:1rem">← 返回</button>
+                    <h1>${article.title}</h1>
+                    <small>${article.date}</small>
+                    <img src="${article.image}" alt="配图" class="article-image">
+                    <div class="article-content">${article.content}</div>
+                </div>
+            `;
+            addAnimations();
+        }
+
+        function loadAbout() {
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <div class="article-detail slide-left">
+                    <h1>关于我</h1>
+                    <p>热爱左搞右搞，专注创造68块钱的用户体验...</p>
+                    <h2>技能树</h2>
+                    <ul>
+                        <li>无</li>
+                    </ul>
+                </div>
+            `;
+            addAnimations();
+        }
+
+        function addAnimations() {
+            const elements = document.querySelectorAll('.fade-in, .slide-left');
+            elements.forEach(el => {
+                el.style.animationPlayState = 'running';
+            });
+        }
+
+        let touchStartY = 0;
+        document.addEventListener('touchstart', e => {
+            touchStartY = e.touches[0].clientY;
+        });
+
+        document.addEventListener('touchend', e => {
+            const touchEndY = e.changedTouches[0].clientY;
+            const deltaY = touchEndY - touchStartY;
+            
+            if (Math.abs(deltaY) > 50) {
+                document.documentElement.style.scrollBehavior = 'smooth';
+                window.scrollBy(0, deltaY > 0 ? -100 : 100);
+                setTimeout(() => {
+                    document.documentElement.style.scrollBehavior = 'auto';
+                }, 1000);
+            }
+        });
+    </script>
+</body>
 </html>
