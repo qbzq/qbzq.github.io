@@ -2,19 +2,81 @@
 <html>
 <head>
     <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            background: url('https://img.picui.cn/free/2025/04/27/680e49c4e4fc9.png') center/cover fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+
+        .button-container {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
         .h5-button {
-            line-height:3;
-            font-size: 50px; /* 设置字体大小为20像素 */
-            width: 150px; /* 设置按钮宽度为150像素 */
-            height: 50px; /* 设置按钮高度为50像素 */
+            display: block;
+            width: 400px;
+            padding: 20px;
+            margin: 15px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            font-size: 24px;
+            border-radius: 15px;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .h5-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #ff5252, #ff7b7b);
+        }
+
+        .h5-button:active {
+            transform: translateY(1px);
+        }
+
+        /* 不同按钮颜色 */
+        .h5-button:nth-child(2) {
+            background: linear-gradient(45deg, #4ecdc4, #45b7af);
+        }
+        .h5-button:nth-child(2):hover {
+            background: linear-gradient(45deg, #45b7af, #3da89f);
+        }
+
+        .h5-button:nth-child(3) {
+            background: linear-gradient(45deg, #ff9a9e, #ff7b7b);
+        }
+
+        .h5-button:nth-child(4) {
+            background: linear-gradient(45deg, #a8edea, #7ed6df);
+        }
+
+        .h5-button:nth-child(5) {
+            background: linear-gradient(45deg, #d4a5a5, #c48f8f);
         }
     </style>
 </head>
 <body>
-    <a href="https://qbzq.github.io/diana.html" class="h5-button"> 《点我跳转到主站》   </a>
-    <a href="https://v8690.github.io" class="h5-button">    《点我跳转到备用站》  </a>
-    <a href="https://qbzq.github.io/ava.html" class="h5-button">   《diana photos》  </a>
-    <a href="https://qbzq.github.io/bella.html" class="h5-button">   《other相册》 </a>
-    <a href="https://qbzq.github.io/root.html" class="h5-button">   《 禁止查看 》  </a>
+    <div class="button-container">
+        <a href="https://qbzq.github.io/diana.html" class="h5-button">主站入口</a>
+        <a href="https://v8690.github.io" class="h5-button">备用站点</a>
+        <a href="https://qbzq.github.io/ava.html" class="h5-button">Diana Photos</a>
+        <a href="https://qbzq.github.io/bella.html" class="h5-button">Other相册</a>
+        <a href="https://qbzq.github.io/root.html" class="h5-button">禁止查看</a>
+    </div>
 </body>
 </html>
